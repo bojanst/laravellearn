@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $cache = app()->make('lada.cache');
+        $cache->flush();
+
+        // for dev only...order is important here for foreign key relationships
+        $this->call(UserSeeder::class);
+        User::factory(10)->create();
     }
 }
